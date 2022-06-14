@@ -1,0 +1,95 @@
+Homework 3- Blackjack
+Linyang He
+May 27, 2018
+Problem 1: Value Iteration
+a. Give the value
+We should notice that the first iteration just initializes all the values. Besides. the terminal states should not accept any new iteration. So the value of -2 or 2 are always 0.
+Iteration 0:
+V(-2) =V(-1) =V(0) =V(1) =V(2)=0
+Iteration 1:
+Vont(-2) =Vont(2) =0
+Vopt（—1） =mazf0.8（20 +0） +0.2（—5+0），0.3（—5+0） +0.7（20 +0）}=15
+Vont (0) =max{0.8(-5+0) +0.2(-5+0),0.3(-5+0) + 0.7(-5+0)}=-5
+Vont(1) =max{0.8(-5+0) +0.2(100 +0),0.3(100 + 0) + 0.7(-5+ 0)}= 26.5 So when it comes to the third iteration, we should notice that all the new optimal value in the iteration 1 should be used.
+Iteration 2:
+Vont(-2) =Vot(2)=0
+Vopt(-1) =ma.f0.8 (20+0) +0.2(-5-5),0.3(-5-5) + 0.7(20 +0)}=14
+
+
+
+Vp () =max{0.8(-5+15)+0.2(-5+26.5),0.3(-5+26.5)+0.7(-5+15)}= 13.45
+Vont (1) =maxf0.8(-5-5) + 0.2(100 + 0),0.3(100 + 0) + 0.7(-5-5)}=23
+b. What is the resulting optimal policy
+Considering the computation progress in the above question. we have:
+Topt(-2) =Topt (2) = endstate
+Topt(-1) =s-1
+Topt (0) =s +1
+Topt(1) =s+1
+Problem 2: Transforming MDPs
+1. The Vi (Sstart) is not always equal to or greater than Vz(Sstart). You can find the counter example in the submission.py
+2. Considering that the MDP is acyclic, the markov chain just goes forward and never goes back. So if we want to get the optimal global reward, we just need to get the optimal reward for each recurrence. Therefore, we can use dynamic programming algorithm to compute the V(s), then the algorihm goes each (s, a, s') triple just once time.
+Just consider state o as a new state that each state can lead to. In other word, we add another option for each iteration as the following figure shows.
+s2
+s1
+
+
+
+We can get have new T'(s, a,s') and new Reward (s,a,s). We have
+r(.6 ){f d)o es sates
+and
+Reward(s,.as)= lewalda.3)
+s' E States s'=o
+Then we can get our new Vop(s) as
+Vop(s) = mara r (s, a,s)-Reward(s,a,s) Vopl(s) (1-)o
+s'EStates
+=masa  T(s, a,s){(Reward(s, a,s) + Vomt(s)
+eState
+Consider the recurrence, we can get:
+Vont(s) = Vopt(s).
+That is, the new MDP has the same optimal values as the original one
+Rroblem 3: Peeking Blackjack
+a. Implement the game of Blackiack
+According to the description in the document, we implement the Blackjack game
+,
+in submission.py. We build the framework based on the actions.
+b. Build a peekingMDF
+Consider that at least 10% of states should be peeking, it means that it's safer at least in 10% chance that you peek the top card. Just build a situation where the more you peek, the safer you are. We just put a quite large value card, which can lead the players to peek more. You can more details in the python script file.
+Problem 4: Learning to Play Blackjack a. Q-Learning Algorithm for Blackjack
+The key of the O-Learning algorithm is as following.
+
+
+
+state
+Q-Table
+Q-value
+actior
+tenn
+In our training processing, we will use the Bellman Equation to update the Q-Table:
+Q(s, a) =r+~(ma.x(Q(s', a'))
+We will build our code based on this equation. You can find more details in the python script
+b. Compare
+We build a function named problem_ 4b to analysis this problem. Compare the policy learned in this case to the policy learned by value iteration. We can have the results as follows:
+Scale Total Actions Different Actions Different Rate
+simallMDP largeMDp 27
+2745
+1017 3.7%
+37%
+According to the table, we can find that Q-Learning performs bettern in smallMDP. We believe this is because the state space is relatively small. When the state space is small. the environment allows the O-Learnine learn the o values for (state, action) pair better.
+However, the Q-Learning algorithm works poor in the largeMDP task. Con- sidering that identityFeatureExtractor actually can not describe unseen states' values, the Q-learning isn't able to accurately compute the (state, action) quite much.
+c. Build Blackiack Feature Extractor
+We implement the following features
+Indicator on the total and the action (1 feature).
+Indicator on the presence/absence of each card and the action (1 feature). #Example: if the deck is (3, 4, 0 , 2), then the indicator on the presence of each card is (1,1.0,1)
+Indicator on the number of cards f
+r each card type and the action (len(counts features)
+More details can find in the pvthon file.
+
+
+
+d. Compare Fixed RL Algorithm with Q-Learning
+We build a function named problem 4d to analysis this problem. After 30000 trials, we can get the result as follows:
+Value Iteration Q-Learning Reward
+6.839.08
+We can find that the Value Iteration gets a relatively low reward score, while the Q-Learning algorithm's score is higher. This is because that the newThresh- oldMIDP can be used by the Q-Learning while can not for the Fixed RL Algo- rithm(Value Iteration).
+
+
